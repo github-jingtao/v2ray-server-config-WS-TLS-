@@ -1,0 +1,47 @@
+{
+    "log": {
+        "access": "none",
+        "error": "/var/log/v2ray/error.log",
+        "loglevel": "error"
+    },
+    "inbounds": [
+        {
+            "port": 12345,
+            "protocol": "shadowsocks",
+            "settings": {
+                "method": "aes-256-gcm",
+                "password": "foobar123456",
+                "network": "tcp,udp"
+            }
+        },
+        {
+            "port": 443,
+            "protocol": "vmess",
+            "settings": {
+                "clients": [
+                    {
+                        "id": "e86c4339-f8bd-4645-a403-ccdb3deb95f6",
+                        "alterId": 32
+                    }
+                ]
+            },
+            "streamSettings": {
+                "network": "ws",
+                "security": "tls",
+                "tlsSettings": {
+                    "certificates": [
+                        {
+                            "certificateFile": "/etc/v2ray/domain.com_ecc/fullchain.cer",
+                            "keyFile": "/etc/v2ray/domain.com_ecc/domain.com.key"
+                        }
+                    ]
+                }
+            }
+        }
+    ],
+    "outbounds": [
+        {
+            "protocol": "freedom"
+        }
+    ]
+}
