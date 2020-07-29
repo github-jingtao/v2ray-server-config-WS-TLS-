@@ -1,6 +1,6 @@
 {
     "log": {
-        "access": "none",
+        "access": "none", //此处不记录访问日志，另外inbounds中，如果不使用sniffing，也不会记录访问日志。
         "error": "/var/log/v2ray/error.log",
         "loglevel": "error"
     },
