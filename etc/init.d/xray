@@ -118,10 +118,10 @@ config_gen_init() {
         "type": "field",
         "domain": [
           "geosite:private",
-          "geosite:apple-cn",
-          "geosite:google-cn",
-          "geosite:win-update",
           "geosite:category-cas",
+          "geosite:apple@cn",
+          "geosite:google@cn",
+          "geosite:microsoft@cn",
           "geosite:category-games@cn",
           "geosite:cn"
         ],
@@ -192,16 +192,16 @@ firewall_init() {
 255.255.255.255/32,
 "
 
-  nft add chain inet fw4 xray_tcp_prerouting {type nat hook prerouting priority 0\; }
-  nft add rule inet fw4 xray_tcp_prerouting ip saddr {$xray_src_bypass_ipset} counter return
-  nft add rule inet fw4 xray_tcp_prerouting ip daddr {$xray_dst_bypass_ipset} counter return
-  nft add rule inet fw4 xray_tcp_prerouting meta mark 0xff counter return
+  nft add chain inet fw4 xray_tcp_prerouting {type nat hook prerouting priority 1\; }
+  nft add rule inet fw4 xray_tcp_prerouting iifname "br-lan" ip saddr {$xray_src_bypass_ipset} counter return
+  nft add rule inet fw4 xray_tcp_prerouting iifname "br-lan" ip daddr {$xray_dst_bypass_ipset} counter return
+  nft add rule inet fw4 xray_tcp_prerouting iifname "br-lan" meta mark 0xff counter return
   nft add rule inet fw4 xray_tcp_prerouting iifname "br-lan" ip protocol tcp counter redirect to :12345
 
-  nft add chain inet fw4 xray_tcp_output {type nat hook output priority 0\; }
+  nft add chain inet fw4 xray_tcp_output {type nat hook output priority 1\; }
   nft add rule inet fw4 xray_tcp_output ip daddr {$xray_dst_bypass_ipset} counter return
   nft add rule inet fw4 xray_tcp_output meta mark 0xff counter return
-  nft add rule inet fw4 xray_tcp_output iifname "br-lan" ip protocol tcp counter redirect to :12345
+  nft add rule inet fw4 xray_tcp_output ip protocol tcp counter redirect to :12345
 
 }
 firewall_flush() {
