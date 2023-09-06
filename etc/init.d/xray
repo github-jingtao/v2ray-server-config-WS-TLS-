@@ -46,7 +46,7 @@ config_gen_init() {
   "dns": {
     "hosts": {},
     "servers": [
-      "114.114.114.114",
+      "119.29.29.29",
       "223.5.5.5",
       "https+local://8.8.8.8/dns-query",
       "quic+local://94.140.14.140"
@@ -55,6 +55,7 @@ config_gen_init() {
   "inbounds": [
     {
       "tag": "transparent",
+      "address": "127.0.0.1",
       "port": 12345,
       "protocol": "dokodemo-door",
       "settings": {
